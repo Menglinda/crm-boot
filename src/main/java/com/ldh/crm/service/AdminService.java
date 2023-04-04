@@ -13,4 +13,6 @@ public interface AdminService extends IService<Admin> {
     String adminLogin(Admin admin);
 
     String addUser(User user);
+
+    Boolean updatePsdById(String email,String pass);
 }

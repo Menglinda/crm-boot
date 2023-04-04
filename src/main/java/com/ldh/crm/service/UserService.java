@@ -1,5 +1,6 @@
 package com.ldh.crm.service;
 
+import com.ldh.crm.pojo.Admin;
 import com.ldh.crm.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ldh.crm.vo.PageInfo;
@@ -12,5 +13,4 @@ import java.util.List;
 * @createDate 2023-04-01 15:05:16
 */
 public interface UserService extends IService<User> {
-    List<User> queryUsers(PageInfo pageInfo);
 }

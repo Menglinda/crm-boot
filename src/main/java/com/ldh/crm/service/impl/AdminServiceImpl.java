@@ -25,6 +25,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         implements AdminService {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private AdminMapper adminMapper;
 
     @Override
     public String adminLogin(Admin admin) {
@@ -46,6 +48,12 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         count= userMapper.insert(user);
         if (count>0) return IdUtil.simpleUUID();
         return null;
+    }
+
+    @Override
+    public Boolean updatePsdById(String email,String pass) {
+        boolean flag = adminMapper.updatePassword(email, pass);
+        return flag;
     }
 
 

@@ -1,6 +1,9 @@
 package com.ldh.crm.service.impl;
 
+import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ldh.crm.pojo.Admin;
 import com.ldh.crm.pojo.User;
 import com.ldh.crm.service.UserService;
 import com.ldh.crm.mapper.UserMapper;
@@ -21,13 +24,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Autowired
     private  UserMapper userMapper;
-    @Override
-    public List<User> queryUsers(PageInfo pageInfo) {
-        Integer pageNum = pageInfo.getPageNum();
-        Integer pageSize = pageInfo.getPageSize();
-        List<User> users = userMapper.queryUsers(pageNum, pageSize);
-        return users;
-    }
+
+
 }
 
 

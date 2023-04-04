@@ -3,6 +3,8 @@ package com.ldh.crm.mapper;
 import com.ldh.crm.pojo.Admin;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 /**
 * @author 35108
@@ -13,6 +15,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface AdminMapper extends BaseMapper<Admin> {
 
+    @Update("update admin set password = #{pass} where email = #{email}")
+    public boolean updatePassword(@Param("email") String email,@Param("pass") String pass);
 }
 
 
