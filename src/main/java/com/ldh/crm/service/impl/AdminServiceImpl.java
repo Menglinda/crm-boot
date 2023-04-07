@@ -1,15 +1,15 @@
 package com.ldh.crm.service.impl;
 
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ldh.crm.mapper.ArticleMapper;
 import com.ldh.crm.mapper.UserMapper;
 import com.ldh.crm.pojo.Admin;
+import com.ldh.crm.pojo.Article;
 import com.ldh.crm.pojo.User;
 import com.ldh.crm.service.AdminService;
 import com.ldh.crm.mapper.AdminMapper;
-import net.sf.jsqlparser.statement.insert.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +27,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
     private UserMapper userMapper;
     @Autowired
     private AdminMapper adminMapper;
+    @Autowired
+    private ArticleMapper articleMapper;
+
 
     @Override
     public String adminLogin(Admin admin) {
@@ -54,6 +57,12 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
     public Boolean updatePsdById(String email,String pass) {
         boolean flag = adminMapper.updatePassword(email, pass);
         return flag;
+    }
+
+    @Override
+    public Integer addArticle(Article article) {
+        Integer insert = articleMapper.insert(article);
+        return insert;
     }
 
 

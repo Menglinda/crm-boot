@@ -2,6 +2,7 @@ package com.ldh.crm.service;
 
 import com.ldh.crm.pojo.Admin;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ldh.crm.pojo.Article;
 import com.ldh.crm.pojo.User;
 
 /**
@@ -15,4 +16,6 @@ public interface AdminService extends IService<Admin> {
     String addUser(User user);
 
     Boolean updatePsdById(String email,String pass);
+
+    Integer addArticle(Article article);
 }

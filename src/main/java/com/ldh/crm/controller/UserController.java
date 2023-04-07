@@ -30,9 +30,15 @@ public class UserController {
         if (list != null && list.size() > 0) {
             res = IdUtil.simpleUUID();
         }
-        if (StrUtil.isEmpty(res)){
+        if (StrUtil.isEmpty(res)) {
             return R.fail("用户邮箱或密码错误！");
         }
         return R.data(res);
+    }
+
+    @PostMapping("/getUser")
+    public User getUser(@RequestBody User user) {
+        String email = user.getEmail();
+        return userService.getById(email);
     }
 }
