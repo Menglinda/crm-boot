@@ -17,17 +17,16 @@ public class ReviewController {
     private ReviewService reviewService;
 
     @GetMapping("/getReview/{articleId}")
-    public List<Review> getReview(@PathVariable Integer articleId){
-        List<Review> list = reviewService.findComment(articleId);
-        return list;
+    public List<Review> getReview(@PathVariable Integer articleId) {
+        return reviewService.getReview(articleId);
     }
 
     @PostMapping("/sendReview")
-    public boolean saveReview(@RequestBody Review review){
-        List<Review> list = reviewService.list();
-        review.setId(list.size()+1);
+    public boolean saveReview(@RequestBody Review review) {
         review.setTime(DateUtil.now());
         boolean flag = reviewService.save(review);
         return flag;
     }
+
+
 }

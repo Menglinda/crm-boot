@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.ldh.crm.pojo.R;
 import com.ldh.crm.pojo.User;
 import com.ldh.crm.service.UserService;
+import com.ldh.crm.vo.ChangePsdUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,5 +41,22 @@ public class UserController {
     public User getUser(@RequestBody User user) {
         String email = user.getEmail();
         return userService.getById(email);
+    }
+
+    @GetMapping("/changePsd/{email}")
+    public User queryById(@PathVariable String email) {
+        return userService.getById(email);
+    }
+
+    @PostMapping("/changePsd")
+    public Boolean changePsd(@RequestBody ChangePsdUser changePsdUser) {
+        String email = changePsdUser.getEmail();
+        String nickname = changePsdUser.getNickname();
+        String pass = changePsdUser.getPass();
+        User user = new User();
+        user.setEmail(email);
+        user.setNickname(nickname);
+        user.setPassword(pass);
+        return userService.updateById(user);
     }
 }

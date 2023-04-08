@@ -7,16 +7,13 @@
     <resultMap id="BaseResultMap" type="com.ldh.crm.pojo.Review">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+            <result property="userNickname" column="user_nickname" jdbcType="INTEGER"/>
             <result property="time" column="time" jdbcType="VARCHAR"/>
-            <result property="pnickname" column="pNickname" jdbcType="VARCHAR"/>
-            <result property="originnickname" column="originNickname" jdbcType="VARCHAR"/>
-            <result property="articleid" column="articleId" jdbcType="INTEGER"/>
+            <result property="articleId" column="article_id" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,content,nickname,
-        time,pNickname,originNickname,
-        articleId
+        id,content,user_nickname,
+        time,article_id
     </sql>
 </mapper>

@@ -9,16 +9,17 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 /**
- * @author 35108
- * @description 针对表【review】的数据库操作Mapper
- * @createDate 2023-04-07 20:55:34
- * @Entity com.ldh.crm.pojo.Review
- */
+* @author 35108
+* @description 针对表【review】的数据库操作Mapper
+* @createDate 2023-04-08 10:49:17
+* @Entity com.ldh.crm.pojo.Review
+*/
 
 @Mapper
 public interface ReviewMapper extends BaseMapper<Review> {
-    @Select("select c.*,u.nickname from review c left join user u on c.nickname=u.nickname where c.articleId=#{articleId} ;")
-    List<Review> findComment(@Param("articleId") Integer articleId);
+
+    @Select("select * from review where article_id = #{articleId} order by id desc")
+    List<Review> getReview(@Param("articleId") Integer articleId);
 }
 
 

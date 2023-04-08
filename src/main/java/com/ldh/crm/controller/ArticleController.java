@@ -20,9 +20,6 @@ public class ArticleController {
     public Integer addArticleByUser(@RequestBody Article article) {
         Integer count=0;
         if (article.getName() != null && article.getType() != null && article.getContent() != null) {
-            List<Article> list = articleService.list();
-            int size = list.size();
-            article.setId(1000+size+1);
             article.setTime(DateUtil.now());
             count = articleService.addArticle(article);
         }

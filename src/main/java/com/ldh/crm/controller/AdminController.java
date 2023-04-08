@@ -4,7 +4,6 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ldh.crm.pojo.Admin;
 import com.ldh.crm.pojo.Article;
@@ -12,6 +11,7 @@ import com.ldh.crm.pojo.R;
 import com.ldh.crm.pojo.User;
 import com.ldh.crm.service.AdminService;
 import com.ldh.crm.service.ArticleService;
+import com.ldh.crm.service.ReviewService;
 import com.ldh.crm.service.UserService;
 import com.ldh.crm.vo.ChangePsdInfo;
 import com.ldh.crm.vo.PageInfo;
@@ -35,6 +35,9 @@ public class AdminController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     @PostMapping("/login")
     public R<String> AdminLogin(@RequestBody Admin admin) {
@@ -65,8 +68,10 @@ public class AdminController {
     @PostMapping("/add")
     public R<String> addUser(@RequestBody User user) {
         String res = adminService.addUser(user);
-        if (StrUtil.isEmpty(res)) {
+        if (res.equals("邮箱已存在")) {
             return R.fail("用户邮箱已存在！");
+        }else if(res.equals("用户名已存在")){
+            return R.fail("用户名已存在！");
         }
         return R.data(res);
     }
@@ -103,6 +108,13 @@ public class AdminController {
         return flag;
     }
 
+    @DeleteMapping("/deleteReview/{id}")
+    public boolean removeUser(@PathVariable Integer id) {
+        boolean flag = reviewService.removeById(id);
+        return flag;
+    }
+
+
     @PostMapping("/getArticle")
     public IPage<Article> getArticle(@RequestBody PageInfo pageInfo) {
         Page<Article> page = new Page<>(pageInfo.getPageNum(), pageInfo.getPageSize());
@@ -115,11 +127,8 @@ public class AdminController {
 
     @PostMapping("/addArticle")
     public Integer addArticle(@RequestBody Article article) {
-        Integer count=0;
+        Integer count = 0;
         if (article.getName() != null && article.getType() != null && article.getContent() != null) {
-            List<Article> list = articleService.list();
-            int size = list.size();
-            article.setId(1000+size+1);
             article.setNickname("Admin");
             article.setTime(DateUtil.now());
             count = adminService.addArticle(article);
@@ -145,4 +154,11 @@ public class AdminController {
         boolean flag = articleService.removeById(id);
         return flag;
     }
+
+    @GetMapping("/getAllArticle")
+    public List<Article> getAll() {
+        List<Article> list = articleService.list();
+        return list;
+    }
+
 }

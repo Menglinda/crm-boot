@@ -12,21 +12,18 @@ import java.util.List;
 /**
 * @author 35108
 * @description 针对表【review】的数据库操作Service实现
-* @createDate 2023-04-07 17:59:42
+* @createDate 2023-04-08 10:49:17
 */
 @Service
 public class ReviewServiceImpl extends ServiceImpl<ReviewMapper, Review>
     implements ReviewService{
+
     @Autowired
     private ReviewMapper reviewMapper;
-
     @Override
-    public List<Review> findComment(Integer articleId) {
-
-
-        return  reviewMapper.findComment(articleId);
+    public List<Review> getReview(Integer articleId) {
+        return reviewMapper.getReview(articleId);
     }
-
 }
 
 

@@ -2,7 +2,12 @@ package com.ldh.crm.mapper;
 
 import com.ldh.crm.pojo.Article;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ldh.crm.pojo.Review;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
 * @author 35108
@@ -13,7 +18,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
-
+    
 }
 
 

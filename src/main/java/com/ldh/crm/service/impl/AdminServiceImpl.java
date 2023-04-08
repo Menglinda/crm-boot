@@ -44,8 +44,12 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
     @Override
     public String addUser(User user) {
         User user1 = userMapper.selectById(user.getEmail());
+        List<User> user2 = userMapper.selectByNickname(user.getNickname());
         if(user1!=null){
-            return null;
+            return "邮箱已存在";
+        }
+        if(user2.size()>0){
+            return "用户名已存在";
         }
         int count=0;
         count= userMapper.insert(user);

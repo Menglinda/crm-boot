@@ -17,7 +17,7 @@ public class Review implements Serializable {
     /**
      * 
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -28,7 +28,7 @@ public class Review implements Serializable {
     /**
      * 
      */
-    private String nickname;
+    private String userNickname;
 
     /**
      * 
@@ -38,17 +38,7 @@ public class Review implements Serializable {
     /**
      * 
      */
-    private String pnickname;
-
-    /**
-     * 
-     */
-    private String originnickname;
-
-    /**
-     * 
-     */
-    private Integer articleid;
+    private Integer articleId;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

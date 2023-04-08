@@ -20,6 +20,9 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("select * from user limit #{pageNum},#{pageSize}")
     List<User> queryUsers(@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
+
+    @Select("select * from user where nickname = #{nickname}")
+    List<User> selectByNickname(@Param("nickname") String nickname);
 }
 
 
