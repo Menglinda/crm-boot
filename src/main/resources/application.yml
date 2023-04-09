@@ -6,6 +6,15 @@ spring:
     username: root
     password: root
 
+#邮箱验证
+  mail:
+    protocol: smtps
+    host: smtp.163.com
+    username: liudaihua68@163.com
+    password: FPIXQYSBLUTSIIQG
+    port: 465
+    default-encoding: UTF-8
+
 #端口号
 server:
   port: 8888
