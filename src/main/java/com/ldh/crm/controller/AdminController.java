@@ -5,20 +5,16 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ldh.crm.pojo.Admin;
-import com.ldh.crm.pojo.Article;
-import com.ldh.crm.pojo.R;
-import com.ldh.crm.pojo.User;
-import com.ldh.crm.service.AdminService;
-import com.ldh.crm.service.ArticleService;
-import com.ldh.crm.service.ReviewService;
-import com.ldh.crm.service.UserService;
+import com.ldh.crm.pojo.*;
+import com.ldh.crm.service.*;
 import com.ldh.crm.vo.ChangePsdInfo;
 import com.ldh.crm.vo.PageInfo;
+import com.ldh.crm.vo.UserNewPass;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -38,6 +34,9 @@ public class AdminController {
 
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+    private ValidationService validationService;
 
     @PostMapping("/login")
     public R<String> AdminLogin(@RequestBody Admin admin) {
@@ -161,4 +160,23 @@ public class AdminController {
         return list;
     }
 
+    @PostMapping("/setNewPass")
+    public String setNewPass(@RequestBody UserNewPass userNewPass) {
+        String email = userNewPass.getEmail();
+        String password = userNewPass.getPassword();
+        String code = userNewPass.getCode();
+        Admin admin = adminService.getById(email);
+        if (admin == null) return "该邮箱不存在";
+        QueryWrapper<Validation> wrapper = new QueryWrapper<>();
+        wrapper.eq("email", email);
+        wrapper.eq("code", code);
+        wrapper.ge("time", new Date());
+        Validation one = validationService.getOne(wrapper);
+        if (one == null) {
+            return "请重新发送验证码";
+        }
+        admin.setPassword(password);
+        adminService.updateById(admin);
+        return "成功";
+    }
 }
