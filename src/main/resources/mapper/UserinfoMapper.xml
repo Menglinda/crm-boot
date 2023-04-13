@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldh.crm.mapper.UserinfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.ldh.crm.pojo.Userinfo">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+            <result property="profile" column="profile" jdbcType="VARCHAR"/>
+            <result property="avatarUrl" column="avatar_url" jdbcType="VARCHAR"/>
+            <result property="points" column="points" jdbcType="OTHER"/>
+            <result property="sex" column="sex" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,nickname,profile,
+        avatar_url,points,sex
+    </sql>
+</mapper>

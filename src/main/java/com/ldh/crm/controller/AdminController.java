@@ -108,7 +108,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/deleteReview/{id}")
-    public boolean removeUser(@PathVariable Integer id) {
+    public boolean removeReview(@PathVariable Integer id) {
         boolean flag = reviewService.removeById(id);
         return flag;
     }
