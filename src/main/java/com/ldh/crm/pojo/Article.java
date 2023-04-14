@@ -30,6 +30,10 @@ public class Article implements Serializable {
 
 
     private String time;
+    private String today;
+
+    private Integer praise;
+    private Integer collect;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

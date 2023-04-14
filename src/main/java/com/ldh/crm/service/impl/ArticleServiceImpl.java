@@ -7,6 +7,8 @@ import com.ldh.crm.mapper.ArticleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
 * @author 35108
 * @description 针对表【article】的数据库操作Service实现
@@ -22,6 +24,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     public Integer addArticle(Article article) {
         int insert = articleMapper.insert(article);
         return insert;
+    }
+
+    @Override
+    public List<Article> getByNickname(String nickname) {
+        return articleMapper.getByNickname(nickname);
     }
 }
 

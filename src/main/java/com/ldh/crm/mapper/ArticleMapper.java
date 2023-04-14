@@ -18,7 +18,9 @@ import java.util.List;
 
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
-    
+
+    @Select("select * from article where nickname = #{nickname}")
+    List<Article> getByNickname(@Param("nickname") String nickname);
 }
 
 

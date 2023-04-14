@@ -38,6 +38,9 @@ public class AdminController {
     @Autowired
     private ValidationService validationService;
 
+    @Autowired
+    private UserinfoService userinfoService;
+
     @PostMapping("/login")
     public R<String> AdminLogin(@RequestBody Admin admin) {
         String res = adminService.adminLogin(admin);
@@ -69,7 +72,7 @@ public class AdminController {
         String res = adminService.addUser(user);
         if (res.equals("邮箱已存在")) {
             return R.fail("用户邮箱已存在！");
-        }else if(res.equals("用户名已存在")){
+        } else if (res.equals("用户名已存在")) {
             return R.fail("用户名已存在！");
         }
         return R.data(res);
@@ -130,6 +133,13 @@ public class AdminController {
         if (article.getName() != null && article.getType() != null && article.getContent() != null) {
             article.setNickname("Admin");
             article.setTime(DateUtil.now());
+            article.setToday(DateUtil.today());
+            String nickname = article.getNickname();
+            Userinfo userinfo = userinfoService.queryByNickname(nickname);
+            Integer article1 = userinfo.getArticle();
+            article1 += 1;
+            userinfo.setArticle(article1);
+            userinfoService.updateById(userinfo);
             count = adminService.addArticle(article);
         }
         return count;

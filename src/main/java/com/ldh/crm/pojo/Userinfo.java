@@ -39,12 +39,16 @@ public class Userinfo implements Serializable {
     /**
      * 
      */
-    private Object points;
+    private Integer points;
 
     /**
      * 
      */
     private Integer sex;
+
+    private Integer praise;
+    private Integer collect;
+    private Integer article;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

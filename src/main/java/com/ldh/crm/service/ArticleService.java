@@ -14,4 +14,6 @@ import java.util.List;
 public interface ArticleService extends IService<Article> {
 
     Integer addArticle(Article article);
+
+    List<Article> getByNickname(String nickname);
 }
