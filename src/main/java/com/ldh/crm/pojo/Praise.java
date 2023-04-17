@@ -9,47 +9,22 @@ import lombok.Data;
 
 /**
  * 
- * @TableName userinfo
+ * @TableName praise
  */
-@TableName(value ="userinfo")
+@TableName(value ="praise")
 @Data
-public class Userinfo implements Serializable {
+public class Praise implements Serializable {
     /**
      * 
      */
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    private String email;
     /**
      * 
      */
     private String nickname;
-
-    /**
-     * 
-     */
-    private String profile;
-
-    /**
-     * 
-     */
-    private String avatarUrl;
-
-    /**
-     * 
-     */
-    private Integer points;
-
-    /**
-     * 
-     */
-    private Integer sex;
-
-    private Integer praise;
-    private Integer collect;
-    private Integer article;
-    private Integer review;
+    private String author;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

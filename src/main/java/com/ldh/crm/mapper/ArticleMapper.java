@@ -10,17 +10,23 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 /**
-* @author 35108
-* @description 针对表【article】的数据库操作Mapper
-* @createDate 2023-04-06 22:33:30
-* @Entity com.ldh.crm.pojo.Article
-*/
+ * @author 35108
+ * @description 针对表【article】的数据库操作Mapper
+ * @createDate 2023-04-06 22:33:30
+ * @Entity com.ldh.crm.pojo.Article
+ */
 
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
 
     @Select("select * from article where nickname = #{nickname}")
     List<Article> getByNickname(@Param("nickname") String nickname);
+
+    @Select("select * from article order by praise desc limit 0,10")
+    List<Article> getMostHot();
+
+    @Select("select * from article order by id desc limit 0,10")
+    List<Article> getMostNew();
 }
 
 

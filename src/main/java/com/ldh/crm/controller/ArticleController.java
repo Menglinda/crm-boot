@@ -91,4 +91,14 @@ public class ArticleController {
         if (one == null) return 0;
         else return 1;
     }
+
+    @GetMapping("/getMostHot")
+    public List<Article> getMostHot(){
+        return articleService.getMostHot();
+    }
+
+    @GetMapping("/getMostNew")
+    public List<Article> getMostNew(){
+        return articleService.getMostNew();
+    }
 }

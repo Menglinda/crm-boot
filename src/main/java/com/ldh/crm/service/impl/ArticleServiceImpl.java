@@ -30,6 +30,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     public List<Article> getByNickname(String nickname) {
         return articleMapper.getByNickname(nickname);
     }
+
+    @Override
+    public List<Article> getMostHot() {
+        return articleMapper.getMostHot();
+    }
+
+    @Override
+    public List<Article> getMostNew() {
+        return articleMapper.getMostNew();
+    }
 }
 
 

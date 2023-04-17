@@ -12,6 +12,8 @@ import com.ldh.crm.service.UserinfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/praise")
@@ -28,10 +30,11 @@ public class PraiseController {
 
 
     @GetMapping("/praiseArticle/{id}/{name}/{nickname}")
-    public Boolean praiseArticle(@PathVariable Integer id,  @PathVariable String name,@PathVariable String nickname) {
+    public Boolean praiseArticle(@PathVariable Integer id, @PathVariable String name, @PathVariable String nickname) {
         Praise praise = new Praise();
         praise.setId(id);
         praise.setNickname(name);
+        praise.setAuthor(nickname);
         boolean save = praiseService.save(praise);
         Userinfo userinfo = userinfoService.queryByNickname(nickname);
         Article article = articleService.getById(id);
@@ -56,8 +59,8 @@ public class PraiseController {
         Article article = articleService.getById(id);
         Integer praise1 = article.getPraise();
         Integer praise = 0;
-        if (userinfo!=null){
-            praise= userinfo.getPraise();
+        if (userinfo != null) {
+            praise = userinfo.getPraise();
         }
         if (praise > 0) {
             praise -= 1;
@@ -72,4 +75,8 @@ public class PraiseController {
         return remove;
     }
 
+    @GetMapping("/getPraise/{author}")
+    public List<Praise> getPraise(@PathVariable String author) {
+        return praiseService.getByAuthor(author);
+    }
 }
