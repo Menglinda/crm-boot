@@ -32,7 +32,7 @@ public class PraiseController {
     @GetMapping("/praiseArticle/{id}/{name}/{nickname}")
     public Boolean praiseArticle(@PathVariable Integer id, @PathVariable String name, @PathVariable String nickname) {
         Praise praise = new Praise();
-        praise.setId(id);
+        praise.setArticleId(id);
         praise.setNickname(name);
         praise.setAuthor(nickname);
         boolean save = praiseService.save(praise);
@@ -52,7 +52,7 @@ public class PraiseController {
     @GetMapping("/cancelPraise/{id}/{name}/{nickname}")
     public Boolean cancelPraise(@PathVariable Integer id, @PathVariable String name, @PathVariable String nickname) {
         QueryWrapper<Praise> wrapper = new QueryWrapper<>();
-        wrapper.eq("id", id);
+        wrapper.eq("article_id", id);
         wrapper.eq("nickname", name);
         boolean remove = praiseService.remove(wrapper);
         Userinfo userinfo = userinfoService.queryByNickname(nickname);

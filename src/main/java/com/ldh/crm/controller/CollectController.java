@@ -30,7 +30,7 @@ public class CollectController {
     @GetMapping("/collectArticle/{id}/{nickname}/{author}")
     public Boolean collectArticle(@PathVariable Integer id, @PathVariable String nickname, @PathVariable String author) {
         Collect collect = new Collect();
-        collect.setId(id);
+        collect.setArticleId(id);
         collect.setNickname(nickname);
         collect.setAuthor(author);
         boolean save = collectService.save(collect);

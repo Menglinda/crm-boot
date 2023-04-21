@@ -54,13 +54,14 @@ public class ArticleController {
                 points += 5;
                 userinfo.setPoints(points);
                 userinfoService.updateById(userinfo);
-                count += 1;
+                count ++;
             }
             Integer article1 = userinfo.getArticle();
             article1 += 1;
             userinfo.setArticle(article1);
             userinfoService.updateById(userinfo);
-            count = articleService.addArticle(article);
+            articleService.addArticle(article);
+            count ++;
 
         }
         return count;
@@ -75,7 +76,7 @@ public class ArticleController {
     @GetMapping("/isCollect/{id}/{nickname}")
     public Integer isCollect(@PathVariable Integer id, @PathVariable String nickname) {
         QueryWrapper<Collect> wrapper = new QueryWrapper<>();
-        wrapper.eq("id", id);
+        wrapper.eq("article_id", id);
         wrapper.eq("nickname", nickname);
         Collect one = collectService.getOne(wrapper);
         if (one == null) return 0;
@@ -85,7 +86,7 @@ public class ArticleController {
     @GetMapping("/isPraise/{id}/{nickname}")
     public Integer isPraise(@PathVariable Integer id, @PathVariable String nickname) {
         QueryWrapper<Praise> wrapper = new QueryWrapper<>();
-        wrapper.eq("id", id);
+        wrapper.eq("article_id", id);
         wrapper.eq("nickname", nickname);
         Praise one = praiseService.getOne(wrapper);
         if (one == null) return 0;
@@ -93,12 +94,12 @@ public class ArticleController {
     }
 
     @GetMapping("/getMostHot")
-    public List<Article> getMostHot(){
+    public List<Article> getMostHot() {
         return articleService.getMostHot();
     }
 
     @GetMapping("/getMostNew")
-    public List<Article> getMostNew(){
+    public List<Article> getMostNew() {
         return articleService.getMostNew();
     }
 }

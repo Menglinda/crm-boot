@@ -9,7 +9,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ldh.crm.pojo.Files;
+import com.ldh.crm.pojo.Userinfo;
 import com.ldh.crm.service.FilesService;
+import com.ldh.crm.service.UserinfoService;
 import com.ldh.crm.vo.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,10 +34,13 @@ public class FilesController {
     private String uploadPath;
 
     @Autowired
+    private UserinfoService userinfoService;
+
+    @Autowired
     private FilesService filesService;
 
     @PostMapping("/upload")
-    public String upload(@RequestParam MultipartFile file,@RequestParam String nickname) throws IOException {
+    public String upload(@RequestParam MultipartFile file, @RequestParam String nickname) throws IOException {
 
         String originalFilename = file.getOriginalFilename();
         String type = FileUtil.extName(originalFilename);
@@ -90,4 +95,20 @@ public class FilesController {
         return filesService.removeById(id);
     }
 
+    @GetMapping("/cost/{nickname}")
+    public Integer costPoints(@PathVariable String nickname) {
+        Userinfo userinfo = userinfoService.queryByNickname(nickname);
+        if (userinfo != null) {
+            Integer points = userinfo.getPoints();
+            if (points >= 2) {
+                points -= 2;
+                userinfo.setPoints(points);
+                userinfoService.updateById(userinfo);
+                return 1;
+            } else if (points < 2) {
+                return 0;
+            }
+        }
+        return -1;
+    }
 }

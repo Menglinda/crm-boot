@@ -2,12 +2,15 @@ package com.ldh.crm.controller;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.system.UserInfo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.ldh.crm.pojo.R;
 import com.ldh.crm.pojo.User;
+import com.ldh.crm.pojo.Userinfo;
 import com.ldh.crm.pojo.Validation;
 import com.ldh.crm.service.UserService;
+import com.ldh.crm.service.UserinfoService;
 import com.ldh.crm.service.ValidationService;
 import com.ldh.crm.vo.ChangePsdUser;
 import com.ldh.crm.vo.UserNewPass;
@@ -28,6 +31,9 @@ public class UserController {
 
     @Autowired
     private ValidationService validationService;
+
+    @Autowired
+    private UserinfoService userinfoService;
 
     @PostMapping("/login")
     public R<String> userLogin(@RequestBody User user) {
@@ -96,6 +102,10 @@ public class UserController {
         user1.setNickname(nickname);
         user1.setPassword(password);
         userService.save(user1);
+        Userinfo userinfo = new Userinfo();
+        userinfo.setEmail(email);
+        userinfo.setNickname(nickname);
+        userinfoService.save(userinfo);
         return "注册成功";
     }
 

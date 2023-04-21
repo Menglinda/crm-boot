@@ -4,29 +4,36 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
- * 
- * @TableName collect
+ * @TableName plan
  */
-@TableName(value ="collect")
+@TableName(value = "plan")
 @Data
-public class Collect implements Serializable {
+public class Plan implements Serializable {
     /**
-     * 
+     *
      */
     @TableId(type = IdType.AUTO)
     private Integer id;
-    private Integer articleId;
 
     /**
-     * 
+     *
      */
-    private String nickname;
-    private String author;
+    private String date;
 
+    /**
+     *
+     */
+    private String content;
+
+    private String nickname;
+
+    private Integer status;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

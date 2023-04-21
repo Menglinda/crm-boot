@@ -20,6 +20,7 @@ public class Praise implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
+    private Integer articleId;
     /**
      * 
      */

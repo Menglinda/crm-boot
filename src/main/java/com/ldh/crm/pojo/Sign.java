@@ -9,24 +9,26 @@ import lombok.Data;
 
 /**
  * 
- * @TableName collect
+ * @TableName sign
  */
-@TableName(value ="collect")
+@TableName(value ="sign")
 @Data
-public class Collect implements Serializable {
+public class Sign implements Serializable {
     /**
      * 
      */
     @TableId(type = IdType.AUTO)
     private Integer id;
-    private Integer articleId;
 
     /**
      * 
      */
     private String nickname;
-    private String author;
 
+    /**
+     * 
+     */
+    private String time;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

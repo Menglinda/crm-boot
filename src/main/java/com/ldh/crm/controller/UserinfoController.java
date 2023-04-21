@@ -81,7 +81,7 @@ public class UserinfoController {
         List<Collect> list = collectService.getByNickname(nickname);
         ArrayList<Article> articles = new ArrayList<Article>();
         for (Collect collect : list) {
-            Integer id = collect.getId();
+            Integer id = collect.getArticleId();
             Article article = articleService.getById(id);
             articles.add(article);
         }
@@ -97,7 +97,7 @@ public class UserinfoController {
         List<Praise> list = praiseService.getByNickname(nickname);
         ArrayList<Article> articles = new ArrayList<>();
         for (Praise praise : list) {
-            Integer id = praise.getId();
+            Integer id = praise.getArticleId();
             Article article = articleService.getById(id);
             articles.add(article);
         }

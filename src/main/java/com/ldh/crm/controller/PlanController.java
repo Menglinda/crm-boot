@@ -59,6 +59,11 @@ public class PlanController {
         wrapper.eq("nickname", nickname);
         wrapper.eq("date", date);
         Plan one = planService.getOne(wrapper);
-        return one.getStatus();
+        if (one !=null){
+            return one.getStatus();
+        }else {
+            return 0;
+        }
+
     }
 }
