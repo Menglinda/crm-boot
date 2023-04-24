@@ -2,6 +2,7 @@ package com.ldh.crm.controller;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baidu.aip.contentcensor.AipContentCensor;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -10,6 +11,7 @@ import com.ldh.crm.service.*;
 import com.ldh.crm.vo.ChangePsdInfo;
 import com.ldh.crm.vo.PageInfo;
 import com.ldh.crm.vo.UserNewPass;
+import org.json.JSONObject;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,10 @@ import java.util.List;
 @MapperScan("com.ldh.crm.mapper")
 @RequestMapping("/vip")
 public class AdminController {
+
+    private static final String APP_ID = "32779333";
+    private static final String API_KEY = "R1FHat0H7DtCU6KFrBAH6Z7j";
+    private static final String SECRET_KEY = "XOG281QuhO68ROd8j50DuxnC5vEbiaFm";
     @Autowired
     private AdminService adminService;
 
@@ -131,6 +137,17 @@ public class AdminController {
     public Integer addArticle(@RequestBody Article article) {
         Integer count = 0;
         if (article.getName() != null && article.getType() != null && article.getContent() != null) {
+            String content = article.getContent();
+            String name = article.getName();
+            AipContentCensor client = new AipContentCensor(APP_ID, API_KEY, SECRET_KEY);
+            JSONObject response = client.textCensorUserDefined(content);
+            JSONObject jsonObject = client.textCensorUserDefined(name);
+//            System.out.println(response);
+            String conclusion = response.get("conclusion").toString();
+            String conclusion1 = jsonObject.get("conclusion").toString();
+            if ("不合规".equals(conclusion) || "不合规".equals(conclusion1)) {
+                return -1;
+            }
             article.setNickname("Admin");
             article.setTime(DateUtil.now());
             article.setToday(DateUtil.today());
@@ -152,9 +169,23 @@ public class AdminController {
     }
 
     @PostMapping("/updateArticle")
-    public boolean updateArticleById(@RequestBody Article article) {
+    public Integer updateArticleById(@RequestBody Article article) {
+        String content = article.getContent();
+        String name = article.getName();
+        AipContentCensor client = new AipContentCensor(APP_ID, API_KEY, SECRET_KEY);
+        JSONObject response = client.textCensorUserDefined(content);
+        JSONObject jsonObject = client.textCensorUserDefined(name);
+//            System.out.println(response);
+        String conclusion = response.get("conclusion").toString();
+        String conclusion1 = jsonObject.get("conclusion").toString();
+        if ("不合规".equals(conclusion) || "不合规".equals(conclusion1)) {
+            return -1;
+        }
         boolean flag = articleService.updateById(article);
-        return flag;
+        if (flag){
+            return 1;
+        }
+        return 0;
     }
 
 

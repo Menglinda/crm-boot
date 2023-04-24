@@ -3,6 +3,7 @@ package com.ldh.crm.controller;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.system.UserInfo;
+import com.baidu.aip.contentcensor.AipContentCensor;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.ldh.crm.pojo.R;
@@ -15,6 +16,7 @@ import com.ldh.crm.service.ValidationService;
 import com.ldh.crm.vo.ChangePsdUser;
 import com.ldh.crm.vo.UserNewPass;
 import com.ldh.crm.vo.UserRegister;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +36,10 @@ public class UserController {
 
     @Autowired
     private UserinfoService userinfoService;
+
+    private static final String APP_ID = "32779333";
+    private static final String API_KEY = "R1FHat0H7DtCU6KFrBAH6Z7j";
+    private static final String SECRET_KEY = "XOG281QuhO68ROd8j50DuxnC5vEbiaFm";
 
     @PostMapping("/login")
     public R<String> userLogin(@RequestBody User user) {
@@ -87,6 +93,13 @@ public class UserController {
         String email = userRegister.getEmail();
         User user = userService.getById(email);
         if (user != null) return "用户邮箱已存在";
+        AipContentCensor client = new AipContentCensor(APP_ID, API_KEY, SECRET_KEY);
+        JSONObject response = client.textCensorUserDefined(nickname);
+//            System.out.println(response);
+        String conclusion = response.get("conclusion").toString();
+        if ("不合规".equals(conclusion)) {
+            return "不合规";
+        }
         String code = userRegister.getCode();
         QueryWrapper<Validation> wrapper = new QueryWrapper<>();
         wrapper.eq("email", email);
