@@ -36,7 +36,7 @@ public class CollectController {
         boolean save = collectService.save(collect);
         Userinfo userinfo = userinfoService.queryByNickname(author);
         Article article = articleService.getById(id);
-        Integer collects = userinfo.getCollect();
+        Integer  collects = userinfo.getCollect();
         Integer collect1 = article.getCollect();
         collect1 += 1;
         collects += 1;
@@ -50,7 +50,7 @@ public class CollectController {
     @GetMapping("/cancelCollect/{id}/{nickname}/{author}")
     public Boolean cancelCollect(@PathVariable Integer id, @PathVariable String nickname ,@PathVariable String author) {
         QueryWrapper<Collect> wrapper = new QueryWrapper<>();
-        wrapper.eq("id", id);
+        wrapper.eq("article_id", id);
         wrapper.eq("nickname", nickname);
         boolean remove = collectService.remove(wrapper);
         Userinfo userinfo = userinfoService.queryByNickname(author);

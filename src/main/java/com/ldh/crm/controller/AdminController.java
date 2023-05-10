@@ -47,6 +47,15 @@ public class AdminController {
     @Autowired
     private UserinfoService userinfoService;
 
+    @Autowired
+    private CollectService collectService;
+
+    @Autowired
+    private PraiseService praiseService;
+
+    @Autowired
+    private CommentService commentService;
+
     @PostMapping("/login")
     public R<String> AdminLogin(@RequestBody Admin admin) {
         String res = adminService.adminLogin(admin);
@@ -182,7 +191,7 @@ public class AdminController {
             return -1;
         }
         boolean flag = articleService.updateById(article);
-        if (flag){
+        if (flag) {
             return 1;
         }
         return 0;
@@ -192,6 +201,43 @@ public class AdminController {
     @DeleteMapping("/deleteArticle/{id}")
     public boolean deleteArticle(@PathVariable Integer id) {
         boolean flag = articleService.removeById(id);
+        if (flag) {
+            QueryWrapper<Collect> wrapper = new QueryWrapper<>();
+            wrapper.eq("article_id", id);
+            List<Collect> list = collectService.list(wrapper);
+            int size = list.size();
+            String author = null;
+            for (Collect collect : list) {
+                Integer id1 = collect.getId();
+                collectService.removeById(id1);
+                author = collect.getAuthor();
+            }
+            QueryWrapper<Praise> wrapper1 = new QueryWrapper<>();
+            wrapper1.eq("article_id", id);
+            List<Praise> list1 = praiseService.list(wrapper1);
+            int size1 = list1.size();
+            for (Praise praise : list1) {
+                Integer id1 = praise.getId();
+                praiseService.removeById(id1);
+            }
+            Userinfo userinfo = userinfoService.queryByNickname(author);
+            Integer collect = userinfo.getCollect();
+            Integer praise = userinfo.getPraise();
+            Integer article = userinfo.getArticle();
+            collect -= size;
+            praise -= size1;
+            article -= 1;
+            userinfo.setCollect(collect);
+            userinfo.setPraise(praise);
+            userinfo.setArticle(article);
+            userinfoService.updateById(userinfo);
+            QueryWrapper<Comment> wrapper2 = new QueryWrapper<>();
+            wrapper2.eq("article_id",id);
+            List<Comment> list2 = commentService.list(wrapper2);
+            for (Comment comment : list2) {
+                commentService.removeById(comment);
+            }
+        }
         return flag;
     }
 
